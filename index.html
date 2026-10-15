@@ -1,0 +1,659 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kali Linux 入門教學</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: 原有教學頁維持不變；右上角「後台」進入管理檢視，新增的主題與教學併入同一份目錄 */
+:root{--bg:#eef1f6;--fg:#142038;--mut:#51607a;--bd:#cfd7e4;--ac:#1d4fd7;--onac:#fff;--term:#0e1729;--tfg:#d8e3f8;--tac:#7fb0ff;--warn:#fff3dc;--wbd:#d98a00;--field:#fff;--err:#b3261e;--ok:#17703a;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1324;--fg:#e4eaf6;--mut:#9aa8c2;--bd:#26344f;--ac:#74a6ff;--onac:#0b1324;--term:#050a15;--warn:#2b2110;--wbd:#e0a030;--field:#111c33;--err:#ff8a80;--ok:#6fd49a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1324;--fg:#e4eaf6;--mut:#9aa8c2;--bd:#26344f;--ac:#74a6ff;--onac:#0b1324;--term:#050a15;--warn:#2b2110;--wbd:#e0a030;--field:#111c33;--err:#ff8a80;--ok:#6fd49a;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.85 "PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}
+.w{max-width:720px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.note{background:var(--warn);border-bottom:2px solid var(--wbd);font-size:.88rem;padding:10px max(20px,env(safe-area-inset-right,0px)) 10px max(20px,env(safe-area-inset-left,0px));line-height:1.7}
+.note p{max-width:720px;margin:0 auto}
+h1{font-size:clamp(2rem,8vw,3rem);line-height:1.2;margin:36px 0 8px;letter-spacing:.02em}
+.lead{color:var(--mut);margin:0 0 18px}
+h2{font-size:1.4rem;line-height:1.4;margin:0 0 10px;text-wrap:balance}
+h2::before{content:"$ ";color:var(--ac);font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700}
+h3{font-size:1.1rem;line-height:1.5;margin:20px 0 6px}
+section{margin-top:30px;padding-top:28px;border-top:1px solid var(--bd)}
+p{margin:0 0 12px}
+pre,code{font-family:ui-monospace,Menlo,Consolas,"Noto Sans Mono CJK TC",monospace}
+pre{background:var(--term);color:var(--tfg);padding:14px 16px;border-radius:6px;overflow-x:auto;font-size:.84rem;line-height:1.7;margin:12px 0}
+:not(pre)>code{background:var(--bd);padding:1px 6px;border-radius:4px;font-size:.88em}
+.p{color:var(--tac)}
+dl{margin:0}
+dt{font-weight:700;margin-top:14px}
+dd{margin:2px 0 0;color:var(--mut)}
+ul,ol{padding-left:1.3em;margin:0 0 12px}
+li{margin:4px 0}
+.box{border-left:4px solid var(--wbd);background:var(--warn);padding:12px 16px;margin:16px 0;border-radius:0 6px 6px 0}
+.box p:last-child{margin:0}
+nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.92rem}
+a{color:var(--ac)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.part{margin:40px 0 0;padding:12px 16px;background:var(--term);color:var(--tfg);border-radius:6px;font-weight:700;font-size:1.1rem}
+.part span{color:var(--tac);font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:400;font-size:.82rem}
+.part small{display:block;font-weight:400;font-size:.85rem;opacity:.8}
+.part+section{border-top:0;margin-top:16px;padding-top:0}
+nav+nav{margin-top:4px}
+nav b{color:var(--mut)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:#367bf0;color:#fff;box-shadow:0 1px 0 rgba(0,0,0,.25)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#367bf0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0;color:#fff;text-decoration:none;font-weight:700;font-size:1.2rem;line-height:1.2}
+.brand:focus-visible,.menu summary:focus-visible,.adminbtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.menu{position:relative}
+.menu summary,.adminbtn{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid rgba(255,255,255,.7);border-radius:6px;font-weight:600;font-size:.95rem;color:#fff;background:none;font-family:inherit;line-height:1.6}
+.menu summary::-webkit-details-marker{display:none}
+.menu[open] summary,.adminbtn[aria-pressed="true"]{background:rgba(255,255,255,.18)}
+.panel{position:absolute;right:0;top:calc(100% + 10px);width:min(280px,84vw);max-height:70vh;overflow-y:auto;padding:6px;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.panel b{display:block;padding:8px 10px 2px;color:var(--mut);font-size:.8rem}
+.panel a{display:block;padding:8px 10px;border-radius:4px;color:var(--fg);text-decoration:none}
+.panel a:hover,.panel a:focus-visible{background:var(--bd)}
+footer{margin-top:30px;padding:24px 0 40px;border-top:1px solid var(--bd);color:var(--mut);font-size:.85rem}
+
+/* 社群新增的教學 */
+.meta{color:var(--mut);font-size:.84rem;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--ac);cursor:pointer;text-decoration:underline}
+.empty{color:var(--mut);margin:14px 0 0}
+
+/* 後台 */
+.adminhead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin:28px 0 0}
+.adminhead h1{margin:0;font-size:clamp(1.6rem,6vw,2.1rem)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--bd);margin:16px 0 22px}
+.tab{background:none;border:0;border-bottom:3px solid transparent;color:var(--mut);padding:8px 12px;font:inherit;cursor:pointer;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--fg);border-color:var(--ac);font-weight:700}
+.form{display:grid;gap:14px}
+.form label{display:grid;gap:4px;font-weight:600;font-size:.92rem;min-width:0}
+input,select,textarea{font:inherit;background:var(--field);color:var(--fg);border:1px solid var(--bd);border-radius:6px;padding:9px 10px;min-width:0;width:100%}
+textarea{font-family:ui-monospace,Menlo,Consolas,"Noto Sans Mono CJK TC",monospace;font-size:.88rem;line-height:1.7;resize:vertical}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:12px}
+@media (max-width:480px){.row{grid-template-columns:minmax(0,1fr)}}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:inherit;font-weight:700;cursor:pointer;border-radius:6px;padding:8px 16px;border:1px solid var(--ac);background:var(--ac);color:var(--onac)}
+.btn.ghost{background:none;color:var(--ac)}
+.btn.sm{padding:3px 10px;font-weight:600;font-size:.85rem}
+.btn.danger{border-color:var(--err);color:var(--err);background:none}
+.btn.danger[data-armed="1"]{background:var(--err);color:var(--bg)}
+.btn[disabled]{opacity:.55;cursor:default}
+.msg{min-height:1.6em;font-size:.9rem;margin:0}
+.msg.err{color:var(--err)}
+.msg.ok{color:var(--ok)}
+details.help{border:1px solid var(--bd);border-radius:6px;padding:8px 12px;font-size:.9rem}
+details.help summary{cursor:pointer;font-weight:600}
+details.help pre{font-size:.8rem}
+.previewbox{border:1px dashed var(--bd);border-radius:6px;padding:4px 16px 12px}
+.previewbox .lab{color:var(--mut);font-size:.8rem;margin:8px 0 0}
+.items{list-style:none;padding:0;margin:8px 0 0}
+.item{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd);margin:0}
+.item .t{flex:1 1 200px;min-width:0;overflow-wrap:anywhere}
+.item .t span{display:block;color:var(--mut);font-size:.82rem}
+.group{margin:22px 0 0;font-size:1rem;color:var(--mut);font-weight:700}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:0 0 16px}
+.kv dt{margin:0;color:var(--mut);font-weight:400}
+.kv dd{margin:0;color:var(--fg)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="bar">
+<a class="brand" href="#" id="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0e1729"/><path d="M8 11l7 5-7 5" fill="none" stroke="#7fb0ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 22h8" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>索洛夫網｜Kali Linux 教學</a>
+<button class="adminbtn" id="adminBtn" type="button" aria-pressed="false" hidden>後台</button>
+<details class="menu"><summary aria-label="主題列表"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>主題</summary>
+<div class="panel" id="panel"></div></details>
+</header>
+<div class="note"><p>本網站及作者等不提倡使用這些技術去做違法的事情，網站的內容僅供學習及參考之用。</p></div>
+
+<div id="site">
+<div class="w">
+<header>
+<h1>Kali Linux 入門教學</h1>
+<p class="lead">從安裝、基本指令到封包分析、Web 測試、系統加固與報告撰寫，分基礎與進階兩篇學習 Kali Linux。</p>
+<pre aria-label="終端機示意"><span class="p">kali@kali:~$</span> whoami
+學習者
+<span class="p">kali@kali:~$</span> cat 目標.txt
+看懂系統、用對工具、守住法律底線</pre>
+<nav>
+<b>基礎</b><a href="#intro">簡介</a><a href="#install">安裝</a><a href="#setup">設定</a><a href="#cmd">指令</a><a href="#tools">工具</a><a href="#lab">練習</a><a href="#path">路線</a></nav>
+<nav><b>進階</b><a href="#env">環境</a><a href="#net">網路</a><a href="#nmap">Nmap</a><a href="#pcap">封包</a><a href="#web">Web</a><a href="#harden">加固</a><a href="#auto">自動化</a><a href="#report">報告</a><a href="#adv-path">路線</a><a href="#phys">物理安全</a><a href="#legal">聲明</a>
+</nav>
+<nav id="navExtra" hidden></nav>
+</header>
+
+<div class="part" id="basic"><span>kali@kali:~$ cd basic</span><br>基礎篇</div>
+<section id="intro"><h2>認識 Kali Linux</h2>
+<p>Kali Linux 是由 OffSec 維護、以 Debian 為基礎的發行版，預載數百種資安工具，常用於滲透測試、數位鑑識與資安研究。</p>
+<p>它是專業人員在「取得授權」前提下使用的工作平台，不適合當作日常主力系統。</p></section>
+
+<section id="install"><h2>安裝方式</h2>
+<dl>
+<dt>虛擬機（最推薦）</dt><dd>用 VirtualBox、VMware 或 UTM 執行，可隨時快照還原。官方提供預建映像檔，下載後匯入即可。</dd>
+<dt>WSL2</dt><dd>Windows 10/11 可執行 <code>wsl --install -d kali-linux</code>，適合只需要命令列工具的情況。</dd>
+<dt>Live USB</dt><dd>從 USB 開機試用，不改動硬碟，適合臨時使用與鑑識。</dd>
+<dt>實體安裝</dt><dd>裝在專用電腦上，可直接使用外接硬體，但需自行處理雙系統與備份。</dd>
+</dl>
+<p>只從官方網站 <a href="https://www.kali.org/get-kali/" target="_blank" rel="noopener">kali.org</a> 下載，並校驗檔案完整性：</p>
+<pre><span class="p">$</span> sha256sum kali-linux-*.iso</pre>
+<p>預建虛擬機的預設帳號與密碼皆為 <code>kali</code>，首次登入後請用 <code>passwd</code> 修改。</p></section>
+
+<section id="setup"><h2>初始設定</h2>
+<p>Kali 採滾動更新，安裝後先更新系統。自 2020.1 起預設使用一般使用者，需要權限時再加 <code>sudo</code>，不建議長期以 root 操作。</p>
+<pre><span class="p">$</span> sudo apt update &amp;&amp; sudo apt full-upgrade -y
+<span class="p">$</span> passwd
+<span class="p">$</span> sudo apt install -y kali-linux-default   # 精簡版（如 WSL）選用</pre></section>
+
+<section id="cmd"><h2>常用指令</h2>
+<pre>pwd                # 顯示目前目錄
+ls -la             # 列出檔案（含隱藏檔）
+cd ~/Documents     # 切換目錄
+cat notes.txt      # 檢視檔案
+nano notes.txt     # 編輯檔案
+sudo &lt;指令&gt;       # 以管理員權限執行
+ip a               # 查看網路介面與 IP
+ping -c 4 8.8.8.8  # 測試網路連線
+apt search 關鍵字   # 搜尋套件
+man &lt;指令&gt;        # 查看說明手冊</pre></section>
+
+<section id="tools"><h2>常見工具</h2>
+<dl>
+<dt>Nmap</dt><dd>網路探索與連接埠掃描，了解網路上有哪些主機與服務。</dd>
+<dt>Wireshark</dt><dd>圖形化封包分析，學習網路協定的好幫手。</dd>
+<dt>Burp Suite</dt><dd>Web 測試用的代理工具，可檢視並修改 HTTP 請求。</dd>
+<dt>Metasploit</dt><dd>漏洞驗證框架，只在自建或已授權的測試環境使用。</dd>
+<dt>John the Ripper / Hashcat</dt><dd>評估密碼強度，用於稽核自己的雜湊資料。</dd>
+<dt>Aircrack-ng</dt><dd>檢查自家無線網路的加密設定是否夠強。</dd>
+</dl>
+<p>例如，對自己架設的靶機做服務探測：</p>
+<pre><span class="p">$</span> nmap -sV 192.168.56.101</pre>
+<div class="box"><p><strong>先取得授權。</strong>掃描與測試只能針對自己擁有、或已取得書面授權的系統。</p></div></section>
+
+<section id="lab"><h2>合法練習環境</h2>
+<ul>
+<li>在虛擬機架設 Metasploitable 作為靶機，網路模式選「僅限主機」或「內部網路」，避免連到真實網路。</li>
+<li>DVWA、OWASP Juice Shop：刻意設計有弱點的 Web 應用。</li>
+<li>TryHackMe、Hack The Box：線上靶場與引導式課程。</li>
+<li>VulnHub：可下載的弱點靶機映像。</li>
+</ul></section>
+
+<section id="path"><h2>基礎學習路線</h2>
+<ol>
+<li>熟悉 Linux 基礎與檔案權限</li>
+<li>學習網路基礎：TCP/IP、DNS、HTTP</li>
+<li>認識常見弱點類型，例如 OWASP Top 10</li>
+<li>在靶機環境練習各種工具</li>
+<li>撰寫測試報告與修補建議</li>
+<li>考取認證（如 Security+、eJPT），參與合法的漏洞賞金計畫</li>
+</ol></section>
+<div id="dyn-basic"></div>
+
+<div class="part" id="adv"><span>kali@kali:~$ cd advanced</span><br>進階篇<small>以下操作都在自己的隔離實驗環境內進行。</small></div>
+
+<section id="env"><h2>工作環境與紀錄</h2>
+<p>專業測試靠的是流程：固定的目錄結構、完整的操作紀錄，以及隨時能還原的快照。</p>
+<pre><span class="p">$</span> mkdir -p ~/lab/{scans,notes,evidence,report}
+<span class="p">$</span> sudo apt install -y tmux
+<span class="p">$</span> tmux new -s lab                    # 可分割視窗；Ctrl+b d 暫離
+<span class="p">$</span> script -a ~/lab/notes/session.log   # 記錄終端機操作</pre>
+<p>做重大變更前先建立虛擬機快照，出問題時一鍵還原。</p></section>
+
+<section id="net"><h2>隔離的虛擬網路</h2>
+<p>理想的實驗室把 Kali、靶機與觀察用的機器放在與真實網路隔離的同一網段：</p>
+<pre>Kali（網卡 1：NAT 上網／網卡 2：僅限主機）
+ ├─ 靶機：Metasploitable、DVWA
+ └─ 觀察機：Wireshark 或 Security Onion
+網段：192.168.56.0/24（僅限主機，不橋接到真實網路）</pre>
+<p>靶機只接內部網段、不給上網；每次練習前先還原乾淨快照，結果才可重現。</p></section>
+
+<section id="nmap"><h2>Nmap 進階用法</h2>
+<p>以下皆以自己的靶機（<code>192.168.56.101</code>）為例。</p>
+<pre><span class="p">$</span> sudo nmap -sV -O 192.168.56.101           # 服務版本與作業系統偵測
+<span class="p">$</span> nmap -p- -oA ~/lab/scans/full 192.168.56.101   # 全部埠，輸出三種格式
+<span class="p">$</span> nmap -sC -sV -p 22,80 192.168.56.101       # 預設腳本 + 版本偵測
+<span class="p">$</span> nmap --script-help default                   # 查看腳本說明</pre>
+<p><code>-oA</code> 會同時產生 .nmap、.gnmap、.xml，方便日後比對與匯入其他工具。NSE 腳本分成多個類別，部分會主動測試弱點，使用前先讀說明，並確認有授權。</p></section>
+
+<section id="pcap"><h2>封包擷取與分析</h2>
+<pre><span class="p">$</span> ip a                                    # 確認網卡名稱
+<span class="p">$</span> sudo tcpdump -i eth0 -w ~/lab/evidence/lab.pcap
+<span class="p">$</span> wireshark ~/lab/evidence/lab.pcap &amp;</pre>
+<p>Wireshark 常用的顯示篩選器：</p>
+<pre>ip.addr == 192.168.56.101               # 只看特定主機
+dns                                     # DNS 查詢
+http.request.method == "POST"           # 表單送出的請求
+tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0   # 只有 SYN：掃描的常見特徵</pre>
+<p>防守方可以從最後一條看出自己是否被掃描。從靶機端回頭觀察自己的測試動作，是理解偵測原理的好方法。</p></section>
+
+<section id="web"><h2>Web 應用測試與防禦</h2>
+<p>基本流程：把瀏覽器代理指向 Burp（<code>127.0.0.1:8080</code>），在 Proxy 檢視請求，用 Repeater 修改後重送，再對照 OWASP Top 10 檢查。靶機建議用 DVWA，把難度從 Low 調到 High，觀察防護如何讓同一類弱點失效。</p>
+<dl>
+<dt>注入（SQL、指令）</dt><dd>防禦：參數化查詢、嚴格的輸入驗證</dd>
+<dt>跨站腳本（XSS）</dt><dd>防禦：輸出編碼、Content-Security-Policy</dd>
+<dt>失效的存取控制</dt><dd>防禦：伺服器端授權檢查、最小權限</dd>
+<dt>跨站請求偽造（CSRF）</dt><dd>防禦：CSRF token、SameSite cookie</dd>
+<dt>伺服器端請求偽造（SSRF）</dt><dd>防禦：目的地允許清單、封鎖內網位址</dd>
+<dt>驗證機制薄弱</dt><dd>防禦：多因素驗證、bcrypt 或 Argon2 雜湊、登入次數限制</dd>
+</dl></section>
+
+<section id="harden"><h2>替 Kali 做加固與稽核</h2>
+<p>Kali 自己也可能被攻擊，不要直接暴露在公網，並做好基本防護：</p>
+<pre><span class="p">$</span> sudo apt install -y ufw lynis
+<span class="p">$</span> sudo ufw default deny incoming &amp;&amp; sudo ufw enable
+<span class="p">$</span> systemctl list-unit-files --state=enabled   # 檢查開機自動啟動的服務
+<span class="p">$</span> sudo lynis audit system                    # 系統安全健檢</pre>
+<ul><li>SSH 改用金鑰登入並停用密碼登入</li><li>實體機安裝時啟用全碟加密（LUKS）</li><li>用完的服務就關掉，並定期更新</li></ul></section>
+
+<section id="auto"><h2>用 Bash 自動化</h2>
+<p>把掃描範圍寫進 <code>scope.txt</code>（只放已獲授權的目標），再用迴圈處理：</p>
+<pre><span class="p">$</span> while read -r ip; do nmap -sV -oA ~/lab/scans/"$ip" "$ip"; done &lt; scope.txt
+<span class="p">$</span> grep "open" ~/lab/scans/*.gnmap          # 彙整所有開放的埠</pre>
+<p>用範圍檔管理目標，能避免誤掃到授權範圍之外的主機。</p></section>
+
+<section id="report"><h2>報告與授權規範</h2>
+<p>測試開始前先簽好書面授權，載明：</p>
+<ul><li>範圍：哪些主機、網段與時間窗口</li><li>禁止事項：例如阻斷服務、社交工程，除非明確同意</li><li>資料處理：取得的資料如何保管與銷毀</li></ul>
+<p>報告至少包含：</p>
+<ol><li>執行摘要（給管理層看的結論）</li><li>範圍與方法</li><li>發現：嚴重度（可參考 CVSS）、影響、重現步驟、證據</li><li>修補建議與優先順序</li></ol>
+<p>若在實務中發現漏洞，請依「負責任揭露」流程通知相關單位，不要公開細節或濫用。</p></section>
+
+<section id="adv-path"><h2>進階路線與認證</h2>
+<ol>
+<li>熟練 Nmap、Wireshark、Burp Suite，並能寫出完整報告</li>
+<li>練習 Hack The Box、TryHackMe 的中階房間與 VulnHub 靶機</li>
+<li>學習 Bash／Python 自動化，以及 Active Directory 與雲端環境基礎</li>
+<li>考取認證：eJPT、PNPT 或 PenTest+，再挑戰 OSCP</li>
+<li>也可走防守路線：Security+、SOC 分析與事件應變</li>
+</ol></section>
+<div id="dyn-adv"></div>
+
+<div id="dyn-topics"></div>
+
+<div class="part" id="other"><span>kali@kali:~$ cd other</span><br>其他</div>
+<section id="phys"><h2>防禦視角：物理安全</h2>
+<p>資安不只發生在網路上。組織常見的物理安全措施包括：</p>
+<ul>
+<li>門禁與訪客管理：刷卡進出、訪客登記與陪同</li>
+<li>機房與網路設備上鎖，並設置監視攝影機</li>
+<li>管制 USB 埠與外接裝置，啟用全碟加密</li>
+<li>螢幕自動鎖定，落實桌面淨空</li>
+<li>定期教育訓練，防範尾隨進入等社交工程</li>
+</ul></section>
+
+<section id="legal"><h2>聲明</h2>
+<div class="box">
+<p lang="zh-Hans">通过实施这些策略并保持警惕，组织可以降低物理入侵的可能性，并减轻其对运营和安全的潜在影响。物理安全应与整体网络安全措施相结合，以提供全面的威胁防护。</p>
+<p><strong>本網站及作者等不提倡使用這些技術去做違法的事情，網站的內容僅供學習及參考之用。</strong></p>
+</div></section>
+</div>
+</div>
+
+<div id="admin" hidden>
+<div class="w">
+<div class="adminhead">
+<h1>後台</h1>
+<button class="btn ghost sm" type="button" id="backBtn">回到教學</button>
+</div>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" type="button" id="tabbtn-tut" data-tab="tut" aria-selected="true">教學</button>
+<button class="tab" role="tab" type="button" id="tabbtn-top" data-tab="top" aria-selected="false">主題</button>
+<button class="tab" role="tab" type="button" id="tabbtn-perm" data-tab="perm" aria-selected="false">權限</button>
+</div>
+
+<div id="tab-tut" role="tabpanel">
+<form class="form" id="tForm" autocomplete="off">
+<h2 id="tFormTitle">新增教學</h2>
+<div class="row">
+<label for="tTitle">標題<input id="tTitle" type="text" maxlength="120" required></label>
+<label for="tOrder">排序<input id="tOrder" type="number" step="1" value="100"></label>
+</div>
+<label for="tTopic">所屬主題<select id="tTopic"></select></label>
+<label for="tBody">內容<textarea id="tBody" rows="14" required placeholder="寫下這篇教學的內容。空一行分段，格式說明在下方。"></textarea></label>
+<details class="help"><summary>內容格式說明</summary>
+<p>空一行代表新段落，其餘格式如下：</p>
+<pre>## 小標題
+- 項目清單
+1. 編號清單
+&gt; 提醒或警告方塊
+`行內指令` 與 [連結文字](https://example.com)
+
+```
+$ nmap -sV 192.168.56.101
+```</pre>
+<p>用三個反引號包起來的區塊會顯示成終端機樣式，開頭是 <code>$ </code> 的行會標出提示符號。</p></details>
+<div class="previewbox" aria-live="off"><p class="lab">預覽</p><div id="tPreview"></div></div>
+<div class="actions">
+<button class="btn" type="submit" id="tSave">發布教學</button>
+<button class="btn ghost" type="button" id="tCancel" hidden>取消編輯</button>
+</div>
+<p class="msg" id="tMsg" role="status"></p>
+</form>
+<h2>已發布的教學</h2>
+<div id="tList"></div>
+</div>
+
+<div id="tab-top" role="tabpanel" hidden>
+<form class="form" id="pForm" autocomplete="off">
+<h2 id="pFormTitle">新增主題</h2>
+<p class="meta" style="margin:0">主題會在「進階篇」之後以獨立區塊出現，教學可以歸在任何主題底下。</p>
+<div class="row">
+<label for="pTitle">主題名稱<input id="pTitle" type="text" maxlength="60" required></label>
+<label for="pOrder">排序<input id="pOrder" type="number" step="1" value="100"></label>
+</div>
+<label for="pDesc">簡介（選填）<input id="pDesc" type="text" maxlength="120"></label>
+<div class="actions">
+<button class="btn" type="submit" id="pSave">建立主題</button>
+<button class="btn ghost" type="button" id="pCancel" hidden>取消編輯</button>
+</div>
+<p class="msg" id="pMsg" role="status"></p>
+</form>
+<h2>所有主題</h2>
+<div id="pList"></div>
+</div>
+
+<div id="tab-perm" role="tabpanel" hidden>
+<h2>權限</h2>
+<dl class="kv"><dt>你的身分</dt><dd id="permRole">確認中</dd></dl>
+<p>後台只開放給管理員名單內的 Google 帳號。用頁面底部的「管理員登入」以 Google 登入後，符合名單的帳號會在右上角看到「後台」按鈕。</p>
+<div class="box"><p>真正的寫入限制在 Firestore 安全規則，不在這個頁面。即使有人改動前端程式碼，名單以外的帳號仍然無法新增、修改或刪除資料。</p></div>
+<p>所有訪客不需登入就能閱讀教學與後台發布的內容，只有寫入需要管理員身分。</p>
+</div>
+</div>
+</div>
+
+<footer><div class="w">本站為非官方教學資源，與 OffSec 無隸屬關係。官方文件請見 <a href="https://www.kali.org/docs/" target="_blank" rel="noopener">kali.org/docs</a>。<p class="meta" id="authBox" style="margin:10px 0 0"><button class="linkbtn" id="authBtn" type="button">管理員登入</button><span id="authMsg" role="status"></span></p></div></footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+/* ===== Firebase 設定：換成你自己的（Firebase 主控台 > 專案設定 > 你的應用程式） ===== */
+var FIREBASE_CONFIG={apiKey:'YOUR_API_KEY',authDomain:'YOUR_PROJECT_ID.firebaseapp.com',projectId:'YOUR_PROJECT_ID',appId:'YOUR_APP_ID'};
+/* 後台管理員的 Google 信箱（全小寫）。這裡只控制介面顯示，真正的寫入限制要同步寫進 firestore.rules */
+var ADMIN_EMAILS=['your-email@gmail.com'];
+var BASIC=[['intro','認識 Kali Linux'],['install','安裝方式'],['setup','初始設定'],['cmd','常用指令'],['tools','常見工具'],['lab','合法練習環境'],['path','基礎學習路線']];
+var ADV=[['env','工作環境與紀錄'],['net','隔離的虛擬網路'],['nmap','Nmap 進階用法'],['pcap','封包擷取與分析'],['web','Web 應用測試與防禦'],['harden','Kali 加固與稽核'],['auto','Bash 自動化'],['report','報告與授權規範'],['adv-path','進階路線與認證']];
+var OTHER=[['phys','防禦視角：物理安全'],['legal','聲明']];
+var BUILTIN=[{id:'basic',title:'基礎篇'},{id:'adv',title:'進階篇'}];
+var $=function(id){return document.getElementById(id)};
+var state={topics:[],tuts:[],uid:null,admin:false,canWrite:false,ps:{}};
+var db=null,auth=null,user=null,editT=null,editP=null,renderTok=0;
+
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function fmt(ms){return typeof ms==='number'?new Date(ms).toLocaleDateString('zh-TW'):''}
+
+/* 內容格式 -> 安全的 DOM，不經過 innerHTML */
+function inline(parent,s){
+  var re=/`([^`]+)`|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,i=0,m;
+  while((m=re.exec(s))){
+    if(m.index>i)parent.append(s.slice(i,m.index));
+    if(m[1]!==undefined){parent.append(el('code','',m[1]))}
+    else{var a=el('a','',m[2]);a.href=m[3];a.target='_blank';a.rel='noopener noreferrer';parent.append(a)}
+    i=re.lastIndex;
+  }
+  if(i<s.length)parent.append(s.slice(i));
+}
+function multiline(p,buf){buf.forEach(function(s,k){if(k)p.append(document.createElement('br'));inline(p,s)})}
+function codeBlock(buf){
+  var pre=el('pre');
+  buf.forEach(function(l,k){
+    if(k)pre.append('\n');
+    if(l.indexOf('$ ')===0){pre.append(el('span','p','$'));pre.append(' '+l.slice(2))}
+    else pre.append(l);
+  });
+  return pre;
+}
+function renderBody(src){
+  var frag=document.createDocumentFragment();
+  var lines=String(src||'').replace(/\r/g,'').split('\n'),i=0,buf;
+  var special=function(l){return /^(```|## |> |- |\d+\. )/.test(l)};
+  while(i<lines.length){
+    var l=lines[i];
+    if(!l.trim()){i++;continue}
+    if(l.indexOf('```')===0){buf=[];i++;while(i<lines.length&&lines[i].indexOf('```')!==0){buf.push(lines[i]);i++}i++;frag.append(codeBlock(buf));continue}
+    if(l.indexOf('## ')===0){var h=el('h3');inline(h,l.slice(3));frag.append(h);i++;continue}
+    if(l.indexOf('> ')===0){buf=[];while(i<lines.length&&lines[i].indexOf('> ')===0){buf.push(lines[i].slice(2));i++}var box=el('div','box'),bp=el('p');multiline(bp,buf);box.append(bp);frag.append(box);continue}
+    if(/^- /.test(l)){var ul=el('ul');while(i<lines.length&&/^- /.test(lines[i])){var li=el('li');inline(li,lines[i].slice(2));ul.append(li);i++}frag.append(ul);continue}
+    if(/^\d+\. /.test(l)){var ol=el('ol');while(i<lines.length&&/^\d+\. /.test(lines[i])){var oi=el('li');inline(oi,lines[i].replace(/^\d+\. /,''));ol.append(oi);i++}frag.append(ol);continue}
+    buf=[];
+    while(i<lines.length&&lines[i].trim()&&!special(lines[i])){buf.push(lines[i]);i++}
+    if(!buf.length){buf.push(lines[i]);i++}
+    var p=el('p');multiline(p,buf);frag.append(p);
+  }
+  return frag;
+}
+
+/* 資料整理 */
+function byOrder(a,b){var x=typeof a.order==='number'?a.order:100,y=typeof b.order==='number'?b.order:100;return x-y||(a.createdAt||0)-(b.createdAt||0)}
+function topicsSorted(){return state.topics.slice().sort(byOrder)}
+function tutsOf(topicId){return state.tuts.filter(function(t){return t.topicId===topicId}).sort(byOrder)}
+function topicName(id){var b=BUILTIN.filter(function(x){return x.id===id})[0];if(b)return b.title;var t=state.topics.filter(function(x){return x.id===id})[0];return t?t.title:null}
+function canMod(item){return state.admin||(!!state.uid&&item.by===state.uid)}
+function who(t){return (t&&t.byName)||'作者'}
+
+/* 前台：把社群教學併入目錄 */
+function tutSection(t){
+  var s=el('section');s.id='t-'+t.id;
+  s.append(el('h2','',t.title));
+  s.append(renderBody(t.body));
+  var m=el('p','meta');
+  m.append(el('span','',who(t)+(t.createdAt?' · '+fmt(t.createdAt):'')));
+  if(state.canWrite&&canMod(t)){var b=el('button','linkbtn','編輯');b.type='button';b.addEventListener('click',function(){editTut(t)});m.append(b)}
+  s.append(m);
+  return s;
+}
+function renderSite(){
+  BUILTIN.forEach(function(b){$('dyn-'+b.id).replaceChildren.apply($('dyn-'+b.id),tutsOf(b.id).map(tutSection))});
+  var box=$('dyn-topics'),nodes=[];
+  topicsSorted().forEach(function(t){
+    var part=el('div','part');part.id='p-'+t.id;
+    part.append(el('span','','kali@kali:~$ cd topic'));part.append(document.createElement('br'));part.append(t.title);
+    if(t.desc)part.append(el('small','',t.desc));
+    nodes.push(part);
+    var ts=tutsOf(t.id);
+    if(ts.length)ts.forEach(function(x){nodes.push(tutSection(x))});
+    else nodes.push(el('p','empty','這個主題還沒有教學。'));
+  });
+  box.replaceChildren.apply(box,nodes);
+  var nav=$('navExtra'),tp=topicsSorted();
+  nav.hidden=!tp.length;
+  nav.replaceChildren();
+  if(tp.length){nav.append(el('b','','主題'));tp.forEach(function(t){var a=el('a','',t.title);a.href='#p-'+t.id;nav.append(a)})}
+  renderMenu();renderAdmin();
+}
+function renderMenu(){
+  var p=$('panel');p.replaceChildren();
+  function grp(label,links){p.append(el('b','',label));links.forEach(function(l){var a=el('a','',l[1]);a.href='#'+l[0];p.append(a)})}
+  function dyn(id){return tutsOf(id).map(function(t){return ['t-'+t.id,t.title]})}
+  grp('基礎篇',BASIC.concat(dyn('basic')));
+  grp('進階篇',ADV.concat(dyn('adv')));
+  topicsSorted().forEach(function(t){grp(t.title,[['p-'+t.id,'主題簡介']].concat(dyn(t.id)))});
+  grp('其他',OTHER);
+}
+
+/* 後台 */
+function say(id,msg,kind){var e=$(id);e.textContent=msg||'';e.className='msg'+(kind?' '+kind:'')}
+function errMsg(e){
+  var c=e&&e.code;
+  if(c==='permission-denied')return '沒有寫入權限。請確認登入的是管理員帳號，且 Firestore 規則已發布。';
+  if(c==='resource-exhausted')return '用量已達上限或操作太頻繁，請稍後再試。';
+  if(c==='unavailable')return '連不上資料庫，請檢查網路後再試。';
+  return '儲存失敗，請稍後再試。';
+}
+function openAdmin(tab){
+  $('site').hidden=true;$('admin').hidden=false;$('adminBtn').setAttribute('aria-pressed','true');
+  showTab(tab||'tut');window.scrollTo(0,0);
+}
+function closeAdmin(){$('admin').hidden=true;$('site').hidden=false;$('adminBtn').setAttribute('aria-pressed','false')}
+function showTab(name){
+  ['tut','top','perm'].forEach(function(n){
+    $('tab-'+n).hidden=n!==name;
+    $('tabbtn-'+n).setAttribute('aria-selected',n===name?'true':'false');
+  });
+}
+function renderTopicSelect(){
+  var sel=$('tTopic'),cur=sel.value;
+  sel.replaceChildren();
+  BUILTIN.concat(topicsSorted()).forEach(function(t){var o=el('option','',t.title);o.value=t.id;sel.append(o)});
+  if(cur&&topicName(cur))sel.value=cur;
+}
+function itemRow(title,meta,allowed,onEdit,onDel){
+  var li=el('li','item'),t=el('div','t');
+  t.append(document.createTextNode(title));t.append(el('span','',meta));li.append(t);
+  if(allowed){
+    var a=el('div','actions');
+    var e=el('button','btn ghost sm','編輯');e.type='button';e.addEventListener('click',onEdit);
+    var d=el('button','btn danger sm','刪除');d.type='button';
+    var timer=null;
+    d.addEventListener('click',function(){
+      if(d.dataset.armed==='1'){clearTimeout(timer);onDel(d);return}
+      d.dataset.armed='1';d.textContent='再按一次確認';
+      timer=setTimeout(function(){d.dataset.armed='';d.textContent='刪除'},4000);
+    });
+    a.append(e);a.append(d);li.append(a);
+  }
+  return li;
+}
+function renderAdmin(){
+  renderTopicSelect();
+  var tl=$('tList'),nodes=[];
+  var groups=BUILTIN.concat(topicsSorted());
+  var known={};groups.forEach(function(g){known[g.id]=1});
+  var orphans=state.tuts.filter(function(t){return !known[t.topicId]});
+  groups.concat(orphans.length?[{id:'__orphan',title:'主題已刪除（請重新指定）'}]:[]).forEach(function(g){
+    var ts=g.id==='__orphan'?orphans.slice().sort(byOrder):tutsOf(g.id);
+    nodes.push(el('p','group',g.title+'（'+ts.length+'）'));
+    if(!ts.length){nodes.push(el('p','empty','尚無教學。'));return}
+    var ul=el('ul','items');
+    ts.forEach(function(t){
+      ul.append(itemRow(t.title,who(t)+(t.createdAt?' · '+fmt(t.createdAt):''),canMod(t),function(){editTut(t)},function(btn){delTut(t,btn)}));
+    });
+    nodes.push(ul);
+  });
+  tl.replaceChildren.apply(tl,nodes);
+  var pl=$('pList'),pn=[],tp=topicsSorted();
+  if(!tp.length)pn.push(el('p','empty','還沒有自訂主題。基礎篇與進階篇是內建主題，可以直接新增教學。'));
+  else{
+    var pu=el('ul','items');
+    tp.forEach(function(t){
+      pu.append(itemRow(t.title,tutsOf(t.id).length+' 篇教學 · '+who(t),canMod(t),function(){editTopic(t)},function(btn){delTopic(t,btn)}));
+    });
+    pn.push(pu);
+  }
+  pl.replaceChildren.apply(pl,pn);
+}
+function renderRole(){
+  var r=state.admin?'管理員':(user?'已登入（無後台權限）':'未登入');
+  $('permRole').textContent=r+(state.myEmail?'（'+state.myEmail+'）':'');
+}
+function preview(){var pv=$('tPreview');pv.replaceChildren(renderBody($('tBody').value))}
+
+function resetT(){editT=null;$('tForm').reset();$('tOrder').value='100';$('tFormTitle').textContent='新增教學';$('tSave').textContent='發布教學';$('tCancel').hidden=true;preview()}
+function resetP(){editP=null;$('pForm').reset();$('pOrder').value='100';$('pFormTitle').textContent='新增主題';$('pSave').textContent='建立主題';$('pCancel').hidden=true}
+function editTut(t){
+  openAdmin('tut');editT=t.id;
+  $('tTitle').value=t.title||'';$('tBody').value=t.body||'';$('tOrder').value=typeof t.order==='number'?t.order:100;
+  if(topicName(t.topicId))$('tTopic').value=t.topicId;
+  $('tFormTitle').textContent='編輯教學';$('tSave').textContent='更新教學';$('tCancel').hidden=false;
+  say('tMsg','');preview();
+}
+function editTopic(t){
+  openAdmin('top');editP=t.id;
+  $('pTitle').value=t.title||'';$('pDesc').value=t.desc||'';$('pOrder').value=typeof t.order==='number'?t.order:100;
+  $('pFormTitle').textContent='編輯主題';$('pSave').textContent='更新主題';$('pCancel').hidden=false;say('pMsg','');
+}
+async function delTut(t,btn){
+  btn.disabled=true;
+  try{await db.doc('tutorials/'+t.id).delete();if(editT===t.id)resetT();say('tMsg','已刪除「'+t.title+'」。','ok')}
+  catch(e){btn.disabled=false;say('tMsg',errMsg(e),'err')}
+}
+async function delTopic(t,btn){
+  if(tutsOf(t.id).length){btn.dataset.armed='';btn.textContent='刪除';say('pMsg','「'+t.title+'」底下還有教學，請先移到其他主題或刪除。','err');return}
+  btn.disabled=true;
+  try{await db.doc('topics/'+t.id).delete();if(editP===t.id)resetP();say('pMsg','已刪除主題「'+t.title+'」。','ok')}
+  catch(e){btn.disabled=false;say('pMsg',errMsg(e),'err')}
+}
+async function saveTut(ev){
+  ev.preventDefault();
+  var title=$('tTitle').value.trim(),body=$('tBody').value.trim(),topicId=$('tTopic').value;
+  var order=parseInt($('tOrder').value,10);if(isNaN(order))order=100;
+  if(!title||!body){say('tMsg','標題和內容都要填。','err');return}
+  if(!topicName(topicId)){say('tMsg','請選擇所屬主題。','err');return}
+  var btn=$('tSave');btn.disabled=true;var now=Date.now();
+  try{
+    if(editT){await db.doc('tutorials/'+editT).update({topicId:topicId,title:title,body:body,order:order,updatedAt:now})}
+    else{await db.collection('tutorials').doc().set({topicId:topicId,title:title,body:body,order:order,createdAt:now,updatedAt:now,by:state.uid,byName:state.myName||''})}
+    var wasEdit=!!editT;resetT();$('tTopic').value=topicId;say('tMsg',wasEdit?'已更新。':'已發布，前台立即可見。','ok');
+  }catch(e){say('tMsg',errMsg(e),'err')}
+  btn.disabled=false;
+}
+async function saveTopic(ev){
+  ev.preventDefault();
+  var title=$('pTitle').value.trim(),desc=$('pDesc').value.trim();
+  var order=parseInt($('pOrder').value,10);if(isNaN(order))order=100;
+  if(!title){say('pMsg','請輸入主題名稱。','err');return}
+  var btn=$('pSave');btn.disabled=true;var now=Date.now();
+  try{
+    if(editP){await db.doc('topics/'+editP).update({title:title,desc:desc,order:order,updatedAt:now})}
+    else{await db.collection('topics').doc().set({title:title,desc:desc,order:order,createdAt:now,updatedAt:now,by:state.uid,byName:state.myName||''})}
+    var wasEdit=!!editP;resetP();say('pMsg',wasEdit?'已更新。':'主題已建立，現在可以在其中新增教學。','ok');
+  }catch(e){say('pMsg',errMsg(e),'err')}
+  btn.disabled=false;
+}
+
+/* 事件 */
+$('adminBtn').addEventListener('click',function(){if($('admin').hidden)openAdmin('tut');else closeAdmin()});
+$('backBtn').addEventListener('click',closeAdmin);
+document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){showTab(b.dataset.tab)})});
+$('tForm').addEventListener('submit',saveTut);
+$('pForm').addEventListener('submit',saveTopic);
+$('tCancel').addEventListener('click',function(){resetT();say('tMsg','')});
+$('pCancel').addEventListener('click',function(){resetP();say('pMsg','')});
+$('tBody').addEventListener('input',preview);
+var menu=document.querySelector('.menu');
+menu.addEventListener('click',function(e){if(e.target.closest('a')){menu.open=false;if(!$('admin').hidden)closeAdmin()}});
+$('brand').addEventListener('click',function(){if(!$('admin').hidden)closeAdmin()});
+document.addEventListener('click',function(e){if(!menu.contains(e.target))menu.open=false});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')menu.open=false});
+
+renderMenu();renderAdmin();preview();
+
+/* 連線 Firebase：Auth（Google 登入）+ Firestore */
+function setAuthUI(ok){
+  var b=$('authBtn'),m=$('authMsg');
+  if(!user){b.textContent='管理員登入';m.textContent='';return}
+  b.textContent='登出';
+  m.textContent='已登入：'+(user.email||'')+(ok?'':'（此帳號沒有後台權限）');
+}
+async function login(){
+  var prov=new firebase.auth.GoogleAuthProvider();
+  prov.setCustomParameters({prompt:'select_account'});
+  try{await auth.signInWithPopup(prov)}
+  catch(e){
+    if(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment'){auth.signInWithRedirect(prov);return}
+    if(e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')$('authMsg').textContent='登入失敗（'+(e.code||'未知錯誤')+'）';
+  }
+}
+function init(){
+  var cfg=FIREBASE_CONFIG;
+  if(typeof firebase==='undefined'||!cfg.apiKey||cfg.apiKey==='YOUR_API_KEY'){$('authBox').hidden=true;console.warn('Firebase 尚未設定或載入失敗');return}
+  firebase.initializeApp(cfg);
+  auth=firebase.auth();db=firebase.firestore();
+  var onErr=function(e){console.warn('db',e&&e.code)};
+  db.collection('topics').onSnapshot(function(s){state.topics=s.docs.map(function(d){return Object.assign({id:d.id},d.data())});renderSite()},onErr);
+  db.collection('tutorials').onSnapshot(function(s){state.tuts=s.docs.map(function(d){return Object.assign({id:d.id},d.data())});renderSite()},onErr);
+  $('authBtn').addEventListener('click',function(){if(user)auth.signOut();else login()});
+  auth.onAuthStateChanged(function(u){
+    user=u;
+    var ok=!!u&&u.emailVerified&&ADMIN_EMAILS.indexOf(String(u.email||'').toLowerCase())>-1;
+    state.uid=u?u.uid:null;state.myName=u?(u.displayName||u.email||''):'';state.myEmail=u?(u.email||''):'';
+    state.admin=state.canWrite=ok;
+    $('adminBtn').hidden=!ok;
+    if(!ok&&!$('admin').hidden)closeAdmin();
+    setAuthUI(ok);renderRole();renderSite();
+  });
+}
+init();
+})();
+</script>
+
+</body></html>
