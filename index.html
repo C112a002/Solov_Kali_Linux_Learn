@@ -367,9 +367,31 @@ $ nmap -sV 192.168.56.101
 <script>
 (function(){
 /* ===== Firebase 設定：換成你自己的（Firebase 主控台 > 專案設定 > 你的應用程式） ===== */
-var FIREBASE_CONFIG={apiKey:'YOUR_API_KEY',authDomain:'YOUR_PROJECT_ID.firebaseapp.com',projectId:'YOUR_PROJECT_ID',appId:'YOUR_APP_ID'};
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA_SGHPZdp4kiwy6sTDVee8JA5yoaoRSq8",
+    authDomain: "solov-kali-linux-learn.firebaseapp.com",
+    projectId: "solov-kali-linux-learn",
+    storageBucket: "solov-kali-linux-learn.firebasestorage.app",
+    messagingSenderId: "595496410459",
+    appId: "1:595496410459:web:6d15d40ae89ac973fece7e",
+    measurementId: "G-RTEC8RH527"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 /* 後台管理員的 Google 信箱（全小寫）。這裡只控制介面顯示，真正的寫入限制要同步寫進 firestore.rules */
-var ADMIN_EMAILS=['your-email@gmail.com'];
+var ADMIN_EMAILS=['jeffyeh1980@gmail.com'];
 var BASIC=[['intro','認識 Kali Linux'],['install','安裝方式'],['setup','初始設定'],['cmd','常用指令'],['tools','常見工具'],['lab','合法練習環境'],['path','基礎學習路線']];
 var ADV=[['env','工作環境與紀錄'],['net','隔離的虛擬網路'],['nmap','Nmap 進階用法'],['pcap','封包擷取與分析'],['web','Web 應用測試與防禦'],['harden','Kali 加固與稽核'],['auto','Bash 自動化'],['report','報告與授權規範'],['adv-path','進階路線與認證']];
 var OTHER=[['phys','防禦視角：物理安全'],['legal','聲明']];
